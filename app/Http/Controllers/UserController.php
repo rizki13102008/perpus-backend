@@ -50,4 +50,29 @@ class UserController extends Controller
         }
 
         $user->save();
-      }  }
+
+        return response()->json([
+            'message' => 'Profil berhasil diperbarui!',
+            'user' => $user
+        ], 200);
+    }
+
+    // Menghapus anggota
+    public function destroy($id)
+    {
+        $user = User::findOrFail($id);
+        
+        // Proteksi tambahan: Pastikan tidak menghapus admin lewat sini
+        if ($user->role === 'admin') {
+            return response()->json(['message' => 'Admin tidak bisa dihapus!'], 403);
+        }
+
+        // Hapus foto profil jika ada sebelum user dihapus
+        if ($user->photo_path) {
+            Storage::disk('public')->delete($user->photo_path);
+        }
+
+        $user->delete();
+        return response()->json(['message' => 'User berhasil dihapus']);
+    }
+}
