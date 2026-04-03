@@ -2,17 +2,15 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Book extends Model
+class Transaction extends Model
 {
-    use HasFactory;
-
-    // Tambahkan baris ini untuk memberi izin kolom mana saja yang boleh diisi
-    protected $fillable = [
-        'judul',
-        'penulis',
-        'stok'
-    ];
+   protected $fillable = [
+    'user_id',
+    'book_id',
+    'tanggal_pinjam',
+    'tanggal_kembali',
+    'status'
+];
 }
