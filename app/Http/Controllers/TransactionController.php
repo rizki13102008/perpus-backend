@@ -39,14 +39,15 @@ class TransactionController extends Controller
             'sisa_stok' => $book->stok
         ]);
     }
-public function returnBook(Request $request)
+
+    public function returnBook(Request $request)
 {
     $request->validate([
         'transaction_id' => 'required|exists:transactions,id',
     ]);
 
     $transaction = Transaction::find($request->transaction_id);
-    
+
     if ($transaction->status === 'kembali') {
         return response()->json(['message' => 'Buku ini sudah dikembalikan sebelumnya'], 400);
     }
